@@ -31,6 +31,7 @@ Public Class Form1
         'set ip address and port when window opens
         TextBox1.Text = "localhost"
         TextBox2.Text = "80"
+        CheckForIllegalCrossThreadCalls = False
     End Sub
 
     'build grid for game
@@ -147,7 +148,8 @@ Public Class Form1
                     xUpdate(hold)
                     Dim x As Integer = Convert.ToInt32(sentence(4))
                     Dim y As Integer = Convert.ToInt32(sentence(6))
-                    Box(x, y).Image = Image.FromFile("E:/Final Project/Source Code/ClientFinal/Red.png")
+                    'Box(x, y).Image = Image.FromFile("E:/Final Project/Source Code/ClientFinal/Red.png")
+                    Box(x, y).Image = My.Resources.Red
                     Box(x, y).SizeMode = PictureBoxSizeMode.StretchImage
                     RemoveHandler Box(x, y).Click, AddressOf Me.Box_Click
                     xUpdate("Player 2's turn")
@@ -157,7 +159,7 @@ Public Class Form1
                     xUpdate(hold)
                     Dim x As Integer = Convert.ToInt32(sentence(4))
                     Dim y As Integer = Convert.ToInt32(sentence(6))
-                    Box(x, y).Image = Image.FromFile("E:/Final Project/Source Code/ClientFinal/Black.png")
+                    Box(x, y).Image = My.Resources.Black
                     Box(x, y).SizeMode = PictureBoxSizeMode.StretchImage
                     RemoveHandler Box(x, y).Click, AddressOf Me.Box_Click
                     xUpdate("Player 1's turn")
