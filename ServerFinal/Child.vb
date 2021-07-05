@@ -20,8 +20,6 @@ Public Class Child
     Dim pReader As StreamReader
     Dim pClient As handleClient
     Private myThread As Thread
-    Dim player1 As Boolean = False
-    Dim player2 As Boolean = False
     Dim play1turn As Boolean = False
     Dim play2turn As Boolean = False
     Dim playnum1 As String
@@ -81,16 +79,14 @@ Public Class Child
         clientList.Add(pClient)
 
         'determine which player is trying to connect
-        If player1 = False Then
-            player1 = True
+        If clientList.Count = 1 Then
             UpdateList("Player 1 Joined!", True)
-        ElseIf player2 = False Then
-            player2 = True
+        ElseIf clientList.Count = 2 Then
             play1turn = True
             UpdateList("Player 2 Joined!", True)
             send("Player 1 goes first")
         Else
-            UpdateList("New Client Joined", True)
+            UpdateList("Too many players joined!!!", True)
         End If
         serverSocket.BeginAcceptTcpClient(New AsyncCallback(AddressOf AcceptClient), serverSocket)
     End Sub
@@ -109,12 +105,10 @@ Public Class Child
                 replay = True
                 play1turn = True
                 play2turn = False
-                player1 = True
                 i = 0
                 j = 0
             Else
                 replay = False
-                player2 = True
                 send("Player 1 goes first")
             End If
         Else
@@ -423,7 +417,10 @@ Public Class Child
     'remove client from server
     Sub ClientExited(ByVal client As handleClient)
         clientList.Remove(client)
-        UpdateList("Player exited game", True)
+        UpdateList("Player exited, players need to restart.", True)
+
+        red.Clear()
+        black.Clear()
     End Sub
 
     'close server window
